@@ -1,9 +1,27 @@
 Rails.application.routes.draw do
+  get 'home/index'
+  get 'file_entries/index'
+  get 'file_entries/new'
+  get 'file_entries/create'
+  get 'file_entries/edit'
+  get 'file_entries/update'
+  get 'file_entries/destroy'
+  get 'file_entries/download'
+  get 'file_entries/share'
+  get 'directories/index'
+  get 'directories/new'
+  get 'directories/create'
+  get 'directories/edit'
+  get 'directories/update'
+  get 'directories/destroy'
+  devise_for :users
+  root 'home#index'
+  resources :directories do
+    resources :file_entries, shallow: true
+  end
+  resources :file_entries
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  root "disks#index"
-  get "/disks", to:"disks#index"
-  get "/disks/:id", to: "disks#show", as: "disk"  
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

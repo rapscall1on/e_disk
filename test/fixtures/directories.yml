@@ -2,14 +2,10 @@
 
 one:
   user: one
-  directory: one
+  parent_id: 1
   name: MyString
-  file_type: MyString
-  file_size: 1
 
 two:
   user: two
-  directory: two
+  parent_id: 1
   name: MyString
-  file_type: MyString
-  file_size: 1

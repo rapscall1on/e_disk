@@ -1,0 +1,7 @@
+<h1>Lista Folderów</h1>
+<ul>
+  <% @directories.each do |directory| %>
+    <li><%= link_to directory.name, directory %></li>
+  <% end %>
+</ul>
+<%= link_to 'Nowy Folder', new_directory_path %>

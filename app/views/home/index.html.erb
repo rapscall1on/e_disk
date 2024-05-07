@@ -1,0 +1,14 @@
+<!-- app/views/home/index.html.erb -->
+<h1>Witaj w aplikacji Magazyn Plików!</h1>
+
+<% if user_signed_in? %>
+  <p>Zalogowany jako: <%= current_user.email %></p>
+  <ul>
+    <li><%= link_to 'Zarządzaj Katalogami', directories_path %></li>
+    <li><%= link_to 'Zarządzaj Plikami', file_entries_path %></li>
+    <li><%= link_to 'Wyloguj się', destroy_user_session_path, method: :delete %></li>
+  </ul>
+<% else %>
+  <%= link_to 'Zaloguj się', new_user_session_path %> lub
+  <%= link_to 'Zarejestruj się', new_user_registration_path %>
+<% end %>

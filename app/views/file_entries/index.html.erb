@@ -1,0 +1,7 @@
+<h1>Lista Plików</h1>
+<ul>
+  <% @file_entries.each do |file_entry| %>
+    <li><%= link_to file_entry.name, file_entry %></li>
+  <% end %>
+</ul>
+<%= link_to 'Nowy Plik', new_file_entry_path %>
