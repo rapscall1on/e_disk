@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  root 'home#index'
   get 'home/index'
+  
   get 'file_entries/index'
   get 'file_entries/new'
   get 'file_entries/create'
@@ -8,6 +10,9 @@ Rails.application.routes.draw do
   get 'file_entries/destroy'
   get 'file_entries/download'
   get 'file_entries/share'
+
+  post '/file_entries', to: "file_entries#create"
+
   get 'directories/index'
   get 'directories/new'
   get 'directories/create'
@@ -15,7 +20,7 @@ Rails.application.routes.draw do
   get 'directories/update'
   get 'directories/destroy'
   devise_for :users
-  root 'home#index'
+  
   resources :directories do
     resources :file_entries, shallow: true
   end
