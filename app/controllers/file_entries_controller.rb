@@ -5,12 +5,22 @@ class FileEntriesController < ApplicationController
   end
 
   def new
+    @file_entry = FileEntry.new
   end
 
   def show
   end
 
   def create
+    @file_entry = FileEntry.new(file_entry_params)
+    @file_entry.user = current_user
+    # @file_entry.directory = Directory.find(params[:id])
+
+    if @file_entry.save
+      redirect_to @file_entry, notice: 'File entry was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -32,6 +42,10 @@ class FileEntriesController < ApplicationController
 
   def set_file_entry
     @file_entry = FileEntry.find(params[:id])
+  end
+
+  def file_entry_params
+    params.require(:file_entry).permit(:file,:user_id,:directory_id)
   end
 
 end
