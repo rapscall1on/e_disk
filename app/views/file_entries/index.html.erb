@@ -4,7 +4,7 @@
     <li>
     <%= link_to file_entry.file.filename, file_entry %>
     <%= button_to 'Delete', file_delete_path(file_entry), method: :delete, data: { confirm: 'Are you sure?' } %>
-
+    <%= link_to 'rename', file_edit_path(file_entry), method: :edit%>
     </li>
   <% end %>
 </ul>

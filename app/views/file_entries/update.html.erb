@@ -1,2 +1,5 @@
-<h1>FileEntries#update</h1>
-<p>Find me in app/views/file_entries/update.html.erb</p>
+<% if @file_entry.update(file_entry_params) %>
+  <p>File entry was successfully updated.</p>
+<% else %>
+  <p>There was an error updating the file entry.</p>
+<% end %>
