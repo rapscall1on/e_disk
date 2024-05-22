@@ -1,7 +1,11 @@
 <h1>Lista Plików</h1>
 <ul>
   <% @file_entries.each do |file_entry| %>
-    <li><%= link_to file_entry.name, file_entry %></li>
+    <li>
+    <%= link_to file_entry.file.filename, file_entry %>
+    <%= button_to 'Delete', file_delete_path(file_entry), method: :delete, data: { confirm: 'Are you sure?' } %>
+
+    </li>
   <% end %>
 </ul>
 <%= link_to 'Nowy Plik', new_file_entry_path %>

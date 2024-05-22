@@ -1,13 +1,11 @@
 <% if @file_entry.file.attached?%>
-        <%= link_to @file_entry.file.filename, url_for(@file_entry.file) %>    
+        <%= link_to @file_entry.file.filename, url_for(@file_entry.file) %>
     <div>
         <%if @file_entry.file.image?%>
             <%= image_tag(@file_entry.file)%>
         <% elsif @file_entry.file.video?%>
             <%= video_tag(url_for(@file_entry.file), controls: "")%>
-        <% elsif @file_entry.file.text?%>
-            <%= link_to @file_entry.file.filename, url_for(@file_entry.file) %>
         <% end%>
     </div>
-    
+    <%= link_to 'Back', file_entries_path %>
 <%end%>

@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   get 'file_entries/create'
   get 'file_entries/edit'
   get 'file_entries/update'
-  get 'file_entries/destroy'
+  delete  '/file_entries/:id/destroy', to: "file_entries#destroy", as: 'file_delete'
+  # get 'file_entries/destroy'
   get 'file_entries/download'
   get 'file_entries/share'
 
@@ -24,7 +25,9 @@ Rails.application.routes.draw do
   resources :directories do
     resources :file_entries, shallow: true
   end
+
   resources :file_entries
+  
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

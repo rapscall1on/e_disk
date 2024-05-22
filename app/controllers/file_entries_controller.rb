@@ -30,6 +30,9 @@ class FileEntriesController < ApplicationController
   end
 
   def destroy
+    @file_entry.file.purge
+    @file_entry.destroy
+    redirect_to file_entries_index_path, notice: 'File entry was successfully destroyed.'
   end
 
   def download
