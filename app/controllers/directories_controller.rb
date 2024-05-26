@@ -33,7 +33,8 @@ class DirectoriesController < ApplicationController
   end
 
   def destroy
-    @directory .destroy
+    @directory.destroy
+    redirect_to directories_path, notice: 'File entry was successfully destroyed.'
   end
 
   def move

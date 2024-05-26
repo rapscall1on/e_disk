@@ -1,5 +1,5 @@
 class FileEntriesController < ApplicationController
-  before_action :set_file_entry, only: [:show, :edit, :update, :destroy,:move]
+  before_action :set_file_entry, only: [:show, :edit, :update, :destroy, :move]
   def index
     @file_entries = FileEntry.all
   end
@@ -8,8 +8,7 @@ class FileEntriesController < ApplicationController
     @file_entry = FileEntry.new
   end
 
-  def show
-  end
+
 
   def create
     @file_entry = FileEntry.new(file_entry_params)
@@ -28,7 +27,8 @@ class FileEntriesController < ApplicationController
 
   
   def update
-   @file_entry.file.update(file_entry_params)
+   @file_entry.file.update(file_params)
+   @file_entry.update(file_entry_params)
    
    redirect_to @file_entry, notice: 'File entry was successfully updated.'
     # else
@@ -43,14 +43,12 @@ class FileEntriesController < ApplicationController
   end
 
   def move
-    @file_entry = FileEntry.find(params[:id])
+    # @file_entry = FileEntry.find(params[:id])
   
-    @file_entry.update(file_entry_params)
-    redirect_to file_entries_index_path, notice: 'File entry was successfully moved.'
+    # @file_entry.update(file_entry_params)
+    # redirect_to file_entries_index_path, notice: 'File entry was successfully moved.'
   end
   
-  
-
   def download
   end
 
@@ -63,8 +61,12 @@ class FileEntriesController < ApplicationController
     @file_entry = FileEntry.find(params[:id])
   end
 
- def file_entry_params
-  params.require(:file_entry).permit(:file,:filename,:user_id,:directory_id)
-end
+  def file_entry_params
+    params.require(:file_entry).permit(:file,:user_id,:directory_id)
+  end
+
+  def file_params
+    params.require(:file_entry).permit(:file,:filename,:user_id,)
+  end
 
 end

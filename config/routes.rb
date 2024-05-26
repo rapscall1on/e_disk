@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   root 'home#index'
   get 'home/index'
   
+  get 'file_entries/index'
+  get 'file_entries/new'
+  get 'file_entries/create'
+  get 'file_entries/edit'
+  get 'file_entries/update'
   
   delete  '/file_entries/:id/destroy', to: "file_entries#destroy", as: 'file_delete'
   patch '/file_entries/:id/edit', to: "file_entries#edit", as: 'file_edit'
