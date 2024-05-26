@@ -1,9 +1,7 @@
 <%= form_with(model: @file_entry, url: file_entry_path(@file_entry), method: :patch) do |form| %>
   <div class="field">
-    <%= form.label :filename%>
-    <%= form.text_field :filename %>
-    <%# <%= form.label :directory %> 
-    <%# <%= form.select :directory_id, Directory.all.collect {|d| [d.name, d.id]}  %>
+    <%= form.label :directory %>
+    <%= form.select :directory_id, Directory.all.collect {|d| [d.name, d.id]}%>
   </div>
 
   <div class="actions">
