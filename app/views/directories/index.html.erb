@@ -2,6 +2,9 @@
 <ul>
   <% @directories.each do |directory| %>
     <li><%= link_to directory.name, directory %></li>
+    <%= button_to 'Delete', directory_path(directory), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'rename', directory_edit_path(directory), method: :edit%>
+    <%= link_to 'Move', move_directory_path(directory), method: :edit %>
   <% end %>
 </ul>
 <%= link_to 'Nowy Folder', new_directory_path %>

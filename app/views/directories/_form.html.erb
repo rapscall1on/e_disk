@@ -1,0 +1,27 @@
+<%= form_with(model: directory) do |form| %>
+  <% if directory.errors.any?%>
+    <div style="color: red" >
+      <h2><%= pluralize(directory.errors.count," error") %> prohibited this file from being saved:</h1>
+  
+      <ul>
+        <% directory.errors.each do |error|%>
+          <li><%= error.full_message%></li>
+          <%end%>
+      </ul>
+    </div>
+  <%end%>
+
+  <div class="field">
+      <%= form.label :name%>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :parent %>
+    <%= form.select :parent_id, Directory.all.collect {|d| [d.name, d.id]}%>
+  </div>
+  
+  <div>
+    <%= form.submit "Upload" %>
+  </div>
+<% end %>

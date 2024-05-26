@@ -1,7 +1,7 @@
 <%= form_with(model: @directory, url: directory_path(@directory), method: :patch) do |form| %>
   <div class="field">
-    <%= form.label :name%>
-    <%= form.text_field :name %>
+    <%= form.label :parent %>
+    <%= form.select :parent_id, Directory.all.collect {|d| [d.name, d.id]}%>
   </div>
 
   <div class="actions">
