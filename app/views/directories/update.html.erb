@@ -1,2 +1,5 @@
-<h1>Directories#update</h1>
-<p>Find me in app/views/directories/update.html.erb</p>
+<% if @directory.update(directory_params) %>
+  <p>directory was successfully updated.</p>
+<% else %>
+  <p>There was an error updating the directory.</p>
+<% end %>

@@ -1,0 +1,11 @@
+<p><h2>Foldery</h2></p>
+<% @directory.directories.each do |directory|%>
+<li><%=link_to directory.name,directory%></li>
+<%end %>
+
+<p><h2>Pliki</h2></p>
+<% @directory.file_entries.each do |file| %>
+<li><%=link_to file.file.filename,file%></li>
+<%end %>
+
+<%= link_to 'Back', directories_path %>
