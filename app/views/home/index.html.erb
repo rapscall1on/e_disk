@@ -4,10 +4,14 @@
 <% if user_signed_in? %>
   <p>Zalogowany jako: <%= current_user.email %></p>
   <ul>
-    <li><%= link_to 'Zarządzaj Katalogami', directories_path %></li>
-    <li><%= link_to 'Zarządzaj Plikami', file_entries_path %></li>
-    <li><%= link_to 'Wyloguj się', destroy_user_session_path, method: :delete %></li>
+    <!--<li><%= link_to 'Zarządzaj Katalogami', directories_path %></li>
+    <li><%= link_to 'Zarządzaj Plikami', file_entries_path %></li>-->
+    <% @directories.each do |directory| %>
+      <p><%= link_to directory.name, directory_path(directory) %></p>
+    <% end %>
   </ul>
+    <li><%= link_to 'Create New Folder', new_directory_path%></li>
+    <li><%= link_to 'Wyloguj się', destroy_user_session_path, method: :delete %></li>
 <% else %>
   <%= link_to 'Zaloguj się', new_user_session_path %> lub
   <%= link_to 'Zarejestruj się', new_user_registration_path %>
