@@ -1,10 +1,12 @@
 class DirectoriesController < ApplicationController
   before_action :set_directory, only: [:show, :edit, :update, :destroy, :move]
   def index
-    @directories = Directory.all
+    @directories = current_user.directories
   end
 
   def show
+    @directory = Directory.find(params[:id])
+    @subdirectories = @directory.directories
   end
 
   def new
