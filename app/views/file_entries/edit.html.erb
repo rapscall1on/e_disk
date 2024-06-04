@@ -1,9 +1,8 @@
-<%= form_with(model: @file_entry, url: file_entry_path(@file_entry), method: :patch) do |form| %>
+<!-- app/views/file_entries/edit.html.erb -->
+<%= form_with(model: @file_entry, local: true) do |form| %>
   <div class="field">
-    <%= form.label :filename%>
-    <%= form.text_field :filename %>
-    <%# <%= form.label :directory %> 
-    <%# <%= form.select :directory_id, Directory.all.collect {|d| [d.name, d.id]}  %>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
   </div>
 
   <div class="actions">
@@ -11,3 +10,4 @@
   </div>
 <% end %>
 
+<%= link_to 'Back', @file_entry.directory ? directory_path(@file_entry.directory) : root_path %>

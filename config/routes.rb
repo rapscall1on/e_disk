@@ -25,6 +25,11 @@ Rails.application.routes.draw do
       get :move
     end
   end
+  # config/routes.rb
+  resources :directories do
+    resources :file_entries
+  end
+  resources :file_entries, only: [:new, :create]
 
   resources :file_entries do
     member do

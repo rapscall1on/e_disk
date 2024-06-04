@@ -1,3 +1,24 @@
-<%= render 'form', file_entry: @file_entry %>
+<%= form_with(model: [@directory, @file_entry], local: true) do |form| %>
+  <% if @file_entry.errors.any?%>
+    <div style="color: red" >
+      <h1><%= pluralize(@file_entry.errors.count," error") %> prohibited this file from being saved:</h1>
 
-<%= link_to 'Back', file_entries_path %>
+      <ul>
+        <% @file_entry.errors.each do |error|%>
+          <li><%= error.full_message%></li>
+        <%end%>
+      </ul>
+    </div>
+  <%end%>
+
+  <div class="field">
+    <%= form.label :file %>
+    <%= form.file_field :file %>
+  </div>
+
+  <div>
+    <%= form.submit "Upload" %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', @directory ? directory_path(@directory) : root_path %>

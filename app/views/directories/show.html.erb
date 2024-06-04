@@ -12,9 +12,16 @@
 
 <p><h2>Pliki</h2></p>
 <% @directory.file_entries.each do |file| %>
-  <li><%=link_to file.file.filename,file%></li>
+  <li>
+    <% if file.file.attached? %>
+      <%= link_to file.file.filename.to_s, rails_blob_path(file.file, disposition: "attachment") %> -
+    <% else %>
+      <%= link_to 'No file attached', '#' %>
+    <% end %>
+    <%= link_to 'Przenieś', move_file_entry_path(file)%> |
+    <%= link_to 'Zmień nazwę', edit_file_entry_path(file)%> | 
+    <%= button_to 'Usuń', file_entry_path(file), method: :delete, form: {style: 'display:inline-block;'}%>
+  </li>
 <%end %>
-<%= link_to 'Załaduj plik', new_file_entry_path(directory_id: @directory.id) %>
-<br>
-<br>
+<br><%= link_to 'Załaduj plik', new_file_entry_path(directory_id: @directory.id) %><br><br>
 <%= link_to 'Back', @directory.parent.nil? ? root_path : directory_path(@directory.parent) %>

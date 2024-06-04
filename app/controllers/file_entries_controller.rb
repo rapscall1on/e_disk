@@ -5,41 +5,52 @@ class FileEntriesController < ApplicationController
   end
 
   def new
+    @directory = params[:directory_id] ? Directory.find(params[:directory_id]) : nil
     @file_entry = FileEntry.new
   end
 
-
-
   def create
-    @file_entry = FileEntry.new(file_entry_params)
+    @directory = params[:directory_id] ? Directory.find(params[:directory_id]) : nil
+    @file_entry = @directory ? @directory.file_entries.build(file_params) : FileEntry.new(file_params)
     @file_entry.user = current_user
-    # @file_entry.directory = Directory.find(params[:directory_id])
 
     if @file_entry.save
-      redirect_to @file_entry, notice: 'File entry was successfully created.'
+      flash[:notice] = 'File was successfully uploaded.'
+      redirect_to @directory ? @directory : root_path
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
   def edit
   end
 
-  
+
   def update
-   @file_entry.file.update(file_params)
-   @file_entry.update(file_entry_params)
-   
-   redirect_to @file_entry, notice: 'File entry was successfully updated.'
-    # else
-    #   render :edit, status: :unprocessable_entity
-    # end
+    if @file_entry.update(file_entry_params)
+      if params[:file_entry][:name].present?
+        old_file = @file_entry.file.download
+        old_extension = File.extname(@file_entry.file.filename.to_s)
+        new_name = params[:file_entry][:name]
+
+        # Append the old extension if the new name doesn't have an extension
+        unless File.extname(new_name).present?
+          new_name += old_extension
+        end
+
+        @file_entry.file.attach(io: StringIO.new(old_file), filename: new_name, content_type: @file_entry.file.content_type)
+      end
+      redirect_to @file_entry.directory ? @file_entry.directory : root_path, notice: 'File entry was successfully updated.'
+    else
+      render :edit
+    end
   end
 
   def destroy
+    directory = @file_entry.directory
     @file_entry.file.purge
     @file_entry.destroy
-    redirect_to file_entries_index_path, notice: 'File entry was successfully destroyed.'
+    redirect_to directory ? directory : root_path, notice: 'File entry was successfully destroyed.'
   end
 
   def move
@@ -62,11 +73,11 @@ class FileEntriesController < ApplicationController
   end
 
   def file_entry_params
-    params.require(:file_entry).permit(:file,:user_id,:directory_id)
+    params.require(:file_entry).permit(:user_id, :directory_id, :file, :name)
   end
 
   def file_params
-    params.require(:file_entry).permit(:file,:filename,:user_id,)
+    params.require(:file_entry).permit(:file, :filename)
   end
 
 end

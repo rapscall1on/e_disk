@@ -53,7 +53,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_150935) do
 
   create_table "file_entries", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "directory_id", null: false
+    t.bigint "directory_id"
     t.string "name"
     t.string "file_type"
     t.integer "file_size"

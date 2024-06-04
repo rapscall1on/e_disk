@@ -1,7 +1,7 @@
 <%= form_with(model: @file_entry, url: file_entry_path(@file_entry), method: :patch) do |form| %>
   <div class="field">
     <%= form.label :directory %>
-    <%= form.select :directory_id, Directory.all.collect {|d| [d.name, d.id]}%>
+    <%= form.select :directory_id, (@file_entry.directory ? [['Top Level', nil]] : []) + Directory.all.reject { |d| d == @file_entry.directory }.collect { |d| [d.full_path, d.id] } %>
   </div>
 
   <div class="actions">
@@ -9,3 +9,4 @@
   </div>
 <% end %>
 
+<%= link_to 'Back', @file_entry.directory ? directory_path(@file_entry.directory) : root_path %>
