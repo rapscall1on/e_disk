@@ -16,6 +16,10 @@ module EDisk
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
 
+    # Zapisywanie logów do pliku important.log
+    config.logger = Logger.new('log/important.log')
+    config.log_level = :info
+
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'local_env.yml')
       YAML.load(File.open(env_file)).each do |key, value|

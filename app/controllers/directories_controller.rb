@@ -1,18 +1,29 @@
 class DirectoriesController < ApplicationController
   before_action :set_directory, only: [:show, :edit, :update, :destroy, :move]
+  logger = Rails.logger
+
+  # Wyświetlenie wszystkich folderów urzytkownika
   def index
     @directories = current_user.directories
+    Rails.logger.info 'Index view accessed'
   end
 
+  # Wyświetlenie szczegółów folderu
   def show
     @directory = Directory.find(params[:id])
     @subdirectories = @directory.directories
+    Rails.logger.info 'Show view accessed'
+
   end
 
+   # Utworzenie nowego folderu
   def new
     @directory = Directory.new(parent_id: params[:parent_id])
+    Rails.logger.info 'New view accessed'
+
   end
 
+  # Zapisanie nowego folderu do bazy
   def create
     @directory = current_user.directories.new(directory_params)
     if @directory.save
@@ -21,6 +32,7 @@ class DirectoriesController < ApplicationController
       else
         redirect_to root_path, notice: 'Directory was successfully created.'
       end
+    Rails.logger.info 'Create view accessed'
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,6 +41,7 @@ class DirectoriesController < ApplicationController
   def edit
   end
 
+  # Aktualizacja właściwości folderu
   def update
     @directory = Directory.find(params[:id])
     original_parent = @directory.parent
@@ -38,15 +51,19 @@ class DirectoriesController < ApplicationController
       else
         redirect_to root_path, notice: 'Directory was successfully moved.'
       end
+    Rails.logger.info "directory has been updated"
+
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
+  # Usunięcie folderu z bazy
   def destroy
     @directory = Directory.find(params[:id])
     parent_directory = @directory.parent
     @directory.destroy
+    Rails.logger.info "directory has been deleted"
     if parent_directory
       redirect_to parent_directory, notice: 'Directory was successfully deleted.'
     else
@@ -55,7 +72,6 @@ class DirectoriesController < ApplicationController
   end
 
   def move
-    @current_parent = @directory.parent
   end
 
   private
