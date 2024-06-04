@@ -1,3 +1,8 @@
-<%= render 'form', directory: @directory %>
+<%= form_for @directory do |f| %>
+  <%= f.hidden_field :parent_id %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
 
-<%= link_to 'Back', directories_path %>
+  <%= f.submit "Utwórz" %>
+  <%= link_to 'Wróć', :back %>
+<% end %>

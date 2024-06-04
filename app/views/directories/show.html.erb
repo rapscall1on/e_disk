@@ -1,11 +1,20 @@
 <p><h2>Foldery</h2></p>
 <% @directory.directories.each do |directory|%>
-<li><%=link_to directory.name,directory%></li>
+  <li>
+    <%=link_to directory.name,directory%> -
+    <%= link_to 'Przenieś', move_directory_path(directory)%> |
+    <%= link_to 'Zmień nazwę', edit_directory_path(directory)%> |
+    <%= button_to 'Usuń', directory_path(directory), method: :delete, form: {style: 'display:inline-block;'}%>
+  </li>
 <%end %>
+<br>
+<%= link_to 'Stwórz folder', new_directory_path(parent_id: @directory.id) %>
 
 <p><h2>Pliki</h2></p>
 <% @directory.file_entries.each do |file| %>
-<li><%=link_to file.file.filename,file%></li>
+  <li><%=link_to file.file.filename,file%></li>
 <%end %>
-
-<%= link_to 'Back', directories_path %>
+<%= link_to 'Załaduj plik', new_file_entry_path(directory_id: @directory.id) %>
+<br>
+<br>
+<%= link_to 'Back', @directory.parent.nil? ? root_path : directory_path(@directory.parent) %>

@@ -1,18 +1,33 @@
 <!-- app/views/home/index.html.erb -->
-<h1>Witaj w aplikacji Magazyn Plików!</h1>
-
 <% if user_signed_in? %>
-  <p>Zalogowany jako: <%= current_user.email %></p>
+  <h1>Witaj <%= current_user.email %>!</h1>
+  <h2>Foldery</h2>
   <ul>
-    <!--<li><%= link_to 'Zarządzaj Katalogami', directories_path %></li>
-    <li><%= link_to 'Zarządzaj Plikami', file_entries_path %></li>-->
-    <% @directories.each do |directory| %>
-      <p><%= link_to directory.name, directory_path(directory) %></p>
+    <% @orphan_directories.each do |directory| %>
+      <li>
+        <%= link_to directory.name, directory_path(directory) %> -
+        <%= link_to 'Przenieś', move_directory_path(directory)%> |
+        <%= link_to 'Zmień nazwę', edit_directory_path(directory)%> |
+        <%= button_to 'Usuń', directory_path(directory), method: :delete, form: {style: 'display:inline-block;'}%>
+      </li>
     <% end %>
   </ul>
-    <li><%= link_to 'Create New Folder', new_directory_path%></li>
-    <li><%= link_to 'Wyloguj się', destroy_user_session_path, method: :delete %></li>
+  <%= link_to 'Stwórz folder', new_directory_path%>
+  <h2>Pliki</h2>
+  <ul>
+    <% @orphan_files.each do |file| %>
+      <li>
+        <%= link_to file.name, file_entry_path(file)%>
+        <%= link_to 'Przenieś', move_file_entry_path(file)%>
+        <%= link_to 'Zmień nazwę', edit_file_entry_path(file)%>
+        <%= button_to 'Usuń', file_entry_path(file), method: :delete, form: {style: 'display:inline-block;'}%>
+      </li>
+    <% end %>
+  </ul>
+  <%= link_to 'Załaduj plik', new_file_entry_path%> <br><br>
+  <%= link_to 'Wyloguj się', destroy_user_session_path, method: :delete %>
 <% else %>
+  <h1>Witaj w aplikacji Magazyn Plików!</h1>
   <%= link_to 'Zaloguj się', new_user_session_path %> lub
   <%= link_to 'Zarejestruj się', new_user_registration_path %>
 <% end %>

@@ -11,6 +11,9 @@
   </head>
 
   <body>
+  <% if @directory %>
+    <p>Current path: <%= @directory.full_path %></p>
+  <% end %>
     <%= yield %>
   </body>
 </html>
