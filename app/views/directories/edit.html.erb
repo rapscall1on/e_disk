@@ -8,4 +8,4 @@
     <%= form.submit %>
   </div>
 <% end %>
-<%= link_to 'Back', :back %>
+<%= link_to 'Back', @directory.parent || directories_path %>

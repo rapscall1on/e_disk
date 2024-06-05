@@ -4,7 +4,7 @@ class Directory < ApplicationRecord
   has_many :directories, foreign_key: "parent_id", class_name: "Directory", dependent: :destroy
   belongs_to :parent, class_name: "Directory", optional: true
 
-  # validates :name, uniqueness: { scope: :parent_id, message: "already exists in the same parent directory" }
+  validates :name, uniqueness: { scope: :parent_id, message: "already exists in the same parent directory" }
 
   def ancestors
     parent ? [parent] + parent.ancestors : []

@@ -19,4 +19,4 @@
     <%= form.submit "Stwórz" %>
   </div>
 <% end %>
-<%= link_to 'Back', @directory&.persisted? ? directory_path(@directory) : root_path %>
+<%= link_to 'Back', @directory.parent_id ? directory_path(@directory.parent_id) : root_path %>
